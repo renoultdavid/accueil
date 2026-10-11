@@ -125,7 +125,6 @@
                   box-shadow 0.4s ease;
     }
 
-    /* Image de fond avec estompe & flou classe */
     .card-bg {
       position: absolute;
       top: 0;
@@ -134,18 +133,17 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      filter: blur(10px) brightness(0.35);
+      filter: blur(4px) brightness(0.75);
       transform: scale(1.15);
       transition: filter 0.5s ease, brightness 0.5s ease;
       z-index: 1;
     }
 
-    /* Voile dégradé noir & Gris de Payne par-dessus le fond */
     .card::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(15, 16, 19, 0.2) 0%, rgba(20, 25, 32, 0.85) 60%, rgba(15, 16, 19, 0.98) 100%);
+      background: linear-gradient(180deg, rgba(15, 16, 19, 0.05) 0%, rgba(20, 25, 32, 0.3) 50%, rgba(15, 16, 19, 0.85) 100%);
       z-index: 2;
     }
 
