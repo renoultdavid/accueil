@@ -10,20 +10,13 @@
 
   <style>
     :root {
-      /* Mode sombre YouTube & Gris de Payne */
       --bg-youtube: #0f1013;
-      --payne-dark: #1b2129;
-      --payne-base: #28313d;
+      --payne-dark: #1a2027;
+      --payne-base: #28323e;
       --payne-light: #3d4a5c;
-      --payne-accent: #52637a;
-
-      /* Accents sobres */
-      --gold-muted: #c9ab73;
-      --gold-subtle: rgba(201, 171, 115, 0.25);
-      --text-main: #f1f3f5;
+      --gold-accent: #c9ab73;
+      --text-main: #f5f6f8;
       --text-muted: #9aa4b2;
-      --border-card: rgba(82, 99, 122, 0.25);
-      --border-card-hover: rgba(201, 171, 115, 0.6);
     }
 
     * {
@@ -41,96 +34,99 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem;
+      overflow: hidden;
       position: relative;
-      overflow-x: hidden;
     }
 
-    /* Halo ambiant en Gris de Payne discret en arrière-plan */
+    /* Ambiance d'arrière-plan Gris de Payne */
     body::before {
       content: "";
       position: fixed;
-      top: -20%;
+      top: -30%;
       left: 50%;
       transform: translateX(-50%);
-      width: 1000px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(40, 49, 61, 0.45) 0%, transparent 70%);
+      width: 1200px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(40, 50, 62, 0.45) 0%, transparent 65%);
       pointer-events: none;
       z-index: 0;
     }
 
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* En-tête sobre & classique */
+    /* En-tête */
     header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2rem;
+      z-index: 2;
     }
 
     header h1 {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 2.8rem;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #ffffff;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
 
     header p {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold-muted);
+      letter-spacing: 0.22em;
+      color: var(--gold-accent);
       text-transform: uppercase;
     }
 
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
-      margin: 1.25rem auto 0;
+    /* Théâtre du carrousel */
+    .carousel-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1300px;
+      height: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      z-index: 1;
     }
 
-    /* Grille des 5 cartes */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.75rem;
+    .carousel-track {
+      position: relative;
       width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
       justify-content: center;
     }
 
-    /* Carte de chaque univers */
+    /* Carte format ample */
     .card {
-      position: relative;
+      position: absolute;
+      width: 380px;
+      height: 520px;
+      background: linear-gradient(180deg, var(--payne-dark) 0%, #12151b 100%);
+      border: 1px solid rgba(82, 99, 122, 0.28);
+      border-radius: 24px;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      color: inherit;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
-      padding: 2.25rem 1.5rem;
-      background: linear-gradient(180deg, var(--payne-dark) 0%, #12151a 100%);
-      border: 1px solid var(--border-card);
-      border-radius: 18px;
-      text-decoration: none;
-      color: inherit;
-      overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      justify-content: flex-end;
+      padding: 3rem 2rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
                   border-color 0.4s ease,
                   box-shadow 0.4s ease;
     }
 
-    /* Emplacement réservé pour les futures photos de fond (flou & fondu) */
-    .card .card-bg-photo {
+    /* Image de fond avec estompe & flou classe */
+    .card-bg {
       position: absolute;
       top: 0;
       left: 0;
@@ -138,71 +134,61 @@
       height: 100%;
       background-size: cover;
       background-position: center;
-      filter: blur(8px) brightness(0.25);
-      opacity: 0.35;
-      transform: scale(1.1);
-      transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .card:hover .card-bg-photo {
-      filter: blur(5px) brightness(0.35);
-      opacity: 0.55;
+      filter: blur(10px) brightness(0.35);
       transform: scale(1.15);
+      transition: filter 0.5s ease, brightness 0.5s ease;
+      z-index: 1;
     }
 
-    /* Contenu au-dessus du fond */
+    /* Voile dégradé noir & Gris de Payne par-dessus le fond */
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 16, 19, 0.2) 0%, rgba(20, 25, 32, 0.85) 60%, rgba(15, 16, 19, 0.98) 100%);
+      z-index: 2;
+    }
+
     .card-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center;
       width: 100%;
     }
 
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: var(--border-card-hover);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55),
-                  0 0 20px rgba(61, 74, 92, 0.3);
-    }
-
-    /* Médaillon / Icône avec effet de pulsation */
+    /* Médaillon / Icône */
     .icon-wrapper {
       position: relative;
-      width: 96px;
-      height: 96px;
-      margin-bottom: 1.5rem;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Pulsation lumineuse subtile en arrière de l'icône */
+    /* Pulsation rythmée autour de l'icône */
     .pulse-ring {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 24px;
-      border: 1px solid rgba(201, 171, 115, 0.4);
+      inset: -4px;
+      border-radius: 28px;
+      border: 1px solid rgba(201, 171, 115, 0.6);
       opacity: 0;
-      transform: scale(0.9);
-      animation: elegant-pulse 3s infinite cubic-bezier(0.25, 1, 0.5, 1);
+      animation: elegant-pulse 3.2s infinite cubic-bezier(0.25, 1, 0.5, 1);
       pointer-events: none;
     }
 
     @keyframes elegant-pulse {
       0% {
-        transform: scale(0.95);
-        opacity: 0.7;
-        border-color: rgba(201, 171, 115, 0.5);
+        transform: scale(0.96);
+        opacity: 0.8;
       }
       50% {
         transform: scale(1.22);
         opacity: 0;
-        border-color: rgba(82, 99, 122, 0.2);
       }
       100% {
         transform: scale(1.25);
@@ -210,95 +196,154 @@
       }
     }
 
-    /* Décalage temporel des pulsations selon la carte */
-    .card:nth-child(2) .pulse-ring { animation-delay: 0.6s; }
-    .card:nth-child(3) .pulse-ring { animation-delay: 1.2s; }
-    .card:nth-child(4) .pulse-ring { animation-delay: 1.8s; }
-    .card:nth-child(5) .pulse-ring { animation-delay: 2.4s; }
-
-    /* Conteneur de l'image : coins arrondis stricts sans marge */
     .icon-box {
-      width: 88px;
-      height: 88px;
-      border-radius: 20px;
+      width: 110px;
+      height: 110px;
+      border-radius: 26px;
       overflow: hidden;
       background-color: #0b0d10;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.3s ease, transform 0.3s ease;
-    }
-
-    .card:hover .icon-box {
-      border-color: var(--gold-muted);
-      transform: scale(1.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
     }
 
     .icon-box img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Remplit parfaitement le carré arrondi sans laisser de marges */
+      object-fit: cover;
       display: block;
     }
 
-    /* Typographie des titres */
+    /* Typographie */
     .card-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.55rem;
+      font-size: 2.2rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      color: #ffffff;
-      margin-bottom: 0.4rem;
       text-transform: uppercase;
-      transition: color 0.3s ease;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
     }
 
-    .card:hover .card-title {
-      color: var(--gold-muted);
-    }
-
-    .card-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
+    .card-desc {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
+      margin-bottom: 1.5rem;
     }
 
-    /* Responsive */
+    .card-action {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--gold-accent);
+      border-radius: 30px;
+      color: var(--gold-accent);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    /* États du carrousel (Positionnement 3D Coverflow) */
+    .card[data-pos="0"] {
+      transform: translateX(0) translateZ(140px) scale(1);
+      z-index: 10;
+      opacity: 1;
+      filter: none;
+      border-color: rgba(201, 171, 115, 0.45);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(40, 50, 62, 0.5);
+    }
+
+    .card[data-pos="0"] .card-action {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card[data-pos="0"]:hover .card-bg {
+      filter: blur(6px) brightness(0.45);
+    }
+
+    .card[data-pos="-1"] {
+      transform: translateX(-310px) translateZ(0) rotateY(18deg) scale(0.85);
+      z-index: 5;
+      opacity: 0.65;
+      filter: brightness(0.7);
+    }
+
+    .card[data-pos="1"] {
+      transform: translateX(310px) translateZ(0) rotateY(-18deg) scale(0.85);
+      z-index: 5;
+      opacity: 0.65;
+      filter: brightness(0.7);
+    }
+
+    .card[data-pos="-2"] {
+      transform: translateX(-560px) translateZ(-80px) rotateY(32deg) scale(0.72);
+      z-index: 2;
+      opacity: 0.35;
+      filter: brightness(0.5);
+    }
+
+    .card[data-pos="2"] {
+      transform: translateX(560px) translateZ(-80px) rotateY(-32deg) scale(0.72);
+      z-index: 2;
+      opacity: 0.35;
+      filter: brightness(0.5);
+    }
+
+    /* Commandes discrètes de navigation */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26, 32, 39, 0.65);
+      border: 1px solid rgba(82, 99, 122, 0.35);
+      color: var(--text-main);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-btn:hover {
+      background: var(--payne-base);
+      border-color: var(--gold-accent);
+      color: var(--gold-accent);
+    }
+
+    .nav-prev { left: 2rem; }
+    .nav-next { right: 2rem; }
+
     @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 580px) {
-      header h1 {
-        font-size: 2.2rem;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
+      .card { width: 300px; height: 440px; }
+      .card[data-pos="-1"] { transform: translateX(-180px) scale(0.8); }
+      .card[data-pos="1"] { transform: translateX(180px) scale(0.8); }
+      .card[data-pos="-2"], .card[data-pos="2"] { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>Carnets & Panoramas</h1>
-      <p>Explorations et collections</p>
-      <div class="divider"></div>
-    </header>
+  <header>
+    <h1>Carnets & Panoramas</h1>
+    <p>Explorations et collections</p>
+  </header>
 
-    <main class="grid">
+  <div class="carousel-stage">
+    <button class="nav-btn nav-prev" id="prevBtn" aria-label="Précédent">&#10094;</button>
 
-      <!-- 1. ARTS -->
-      <a href="https://renoultdavid.github.io/panoramadesarts/" class="card" target="_blank" rel="noopener noreferrer">
-        <!-- Emplacement réservé pour l'image de fond floue -->
-        <div class="card-bg-photo" style="background-image: url('');"></div>
+    <div class="carousel-track" id="track">
+
+      <!-- 0. ARTS -->
+      <div class="card" data-url="https://renoultdavid.github.io/panoramadesarts/">
+        <div class="card-bg" style="background-image: url('');"></div>
         <div class="card-content">
           <div class="icon-wrapper">
             <div class="pulse-ring"></div>
@@ -307,13 +352,15 @@
             </div>
           </div>
           <h2 class="card-title">Arts</h2>
-          <span class="card-label">Panorama des Arts</span>
+          <span class="card-desc">Panorama des Arts</span>
+          <span class="card-action">Entrer</span>
         </div>
-      </a>
+      </div>
 
-      <!-- 2. ASTRONOMIE -->
-      <a href="https://renoultdavid.github.io/astronomie/" class="card" target="_blank" rel="noopener noreferrer">
-        <div class="card-bg-photo" style="background-image: url('');"></div>
+      <!-- 1. ASTRONOMIE (Placé au centre par défaut pour commencer) -->
+      <div class="card" data-url="https://renoultdavid.github.io/astronomie/">
+        <!-- Collez l'URL de l'image de fond ici -->
+        <div class="card-bg" style="background-image: url('');"></div>
         <div class="card-content">
           <div class="icon-wrapper">
             <div class="pulse-ring"></div>
@@ -322,13 +369,14 @@
             </div>
           </div>
           <h2 class="card-title">Astronomie</h2>
-          <span class="card-label">Observations & Espace</span>
+          <span class="card-desc">Observations & Univers</span>
+          <span class="card-action">Entrer</span>
         </div>
-      </a>
+      </div>
 
-      <!-- 3. LIVRES -->
-      <a href="https://renoultdavid.github.io/panoramadeslivres/" class="card" target="_blank" rel="noopener noreferrer">
-        <div class="card-bg-photo" style="background-image: url('');"></div>
+      <!-- 2. LIVRES -->
+      <div class="card" data-url="https://renoultdavid.github.io/panoramadeslivres/">
+        <div class="card-bg" style="background-image: url('');"></div>
         <div class="card-content">
           <div class="icon-wrapper">
             <div class="pulse-ring"></div>
@@ -337,13 +385,14 @@
             </div>
           </div>
           <h2 class="card-title">Livres</h2>
-          <span class="card-label">Panorama des Livres</span>
+          <span class="card-desc">Panorama des Livres</span>
+          <span class="card-action">Entrer</span>
         </div>
-      </a>
+      </div>
 
-      <!-- 4. NATURE -->
-      <a href="https://renoultdavid.github.io/labotaxonomie/" class="card" target="_blank" rel="noopener noreferrer">
-        <div class="card-bg-photo" style="background-image: url('');"></div>
+      <!-- 3. NATURE -->
+      <div class="card" data-url="https://renoultdavid.github.io/labotaxonomie/">
+        <div class="card-bg" style="background-image: url('');"></div>
         <div class="card-content">
           <div class="icon-wrapper">
             <div class="pulse-ring"></div>
@@ -352,13 +401,14 @@
             </div>
           </div>
           <h2 class="card-title">Nature</h2>
-          <span class="card-label">Labo Taxonomie</span>
+          <span class="card-desc">Labo Taxonomie</span>
+          <span class="card-action">Entrer</span>
         </div>
-      </a>
+      </div>
 
-      <!-- 5. VOYAGES -->
-      <a href="https://renoultdavid.github.io/voyages/" class="card" target="_blank" rel="noopener noreferrer">
-        <div class="card-bg-photo" style="background-image: url('');"></div>
+      <!-- 4. VOYAGES -->
+      <div class="card" data-url="https://renoultdavid.github.io/voyages/">
+        <div class="card-bg" style="background-image: url('');"></div>
         <div class="card-content">
           <div class="icon-wrapper">
             <div class="pulse-ring"></div>
@@ -367,12 +417,70 @@
             </div>
           </div>
           <h2 class="card-title">Voyages</h2>
-          <span class="card-label">Itinéraires & Découvertes</span>
+          <span class="card-desc">Itinéraires & Découvertes</span>
+          <span class="card-action">Entrer</span>
         </div>
-      </a>
+      </div>
 
-    </main>
+    </div>
+
+    <button class="nav-btn nav-next" id="nextBtn" aria-label="Suivant">&#10095;</button>
   </div>
 
+  <script>
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    // Index actif initial : 1 (Astronomie)
+    let currentIndex = 1;
+    const total = cards.length;
+
+    function updateCarousel() {
+      cards.forEach((card, i) => {
+        // Calcul de la distance relative dans un cycle fermé (-2, -1, 0, 1, 2)
+        let diff = (i - currentIndex) % total;
+        if (diff > 2) diff -= total;
+        if (diff < -2) diff += total;
+
+        card.setAttribute('data-pos', diff);
+      });
+    }
+
+    function rotateNext() {
+      currentIndex = (currentIndex + 1) % total;
+      updateCarousel();
+    }
+
+    function rotatePrev() {
+      currentIndex = (currentIndex - 1 + total) % total;
+      updateCarousel();
+    }
+
+    // Clic sur les boutons
+    nextBtn.addEventListener('click', rotateNext);
+    prevBtn.addEventListener('click', rotatePrev);
+
+    // Clic sur une carte : si centrale -> ouvre le lien, si latérale -> pivote au centre
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        const pos = parseInt(card.getAttribute('data-pos'), 10);
+        if (pos === 0) {
+          window.open(card.getAttribute('data-url'), '_blank');
+        } else {
+          currentIndex = index;
+          updateCarousel();
+        }
+      });
+    });
+
+    // Support des flèches clavier
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') rotateNext();
+      if (e.key === 'ArrowLeft') rotatePrev();
+    });
+
+    updateCarousel();
+  </script>
 </body>
 </html>
